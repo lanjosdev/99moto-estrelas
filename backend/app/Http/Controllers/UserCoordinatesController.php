@@ -26,6 +26,9 @@ class UserCoordinatesController extends Controller
     //endpoint para inserir coordenadas do usuário
     public function coordinatesUsers(Request $request)
     {
+        // hack para liberar no front a requisição (HACK DE CORS) - IMPORTANTE !!!
+        header('Access-Control-Allow-Origin: *');
+        
         // recupera os dados da requisição
         $info_latitudine = $request->user_coordinates_latitudine;
         $info_longitudine = $request->user_coordinates_longitudine;
@@ -48,7 +51,7 @@ class UserCoordinatesController extends Controller
         //         'message' => 'Nenhuma localização encontrada',
         //     ]);
         // }
-        
+
         // //recuperando noite e dia
         // $night = $verifyExistsCoordinates->night;
         // $dayLight = $verifyExistsCoordinates->daylight;
