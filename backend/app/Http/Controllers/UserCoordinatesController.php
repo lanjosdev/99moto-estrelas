@@ -27,7 +27,7 @@ class UserCoordinatesController extends Controller
     public function coordinatesUsers(Request $request)
     {
         // hack para liberar no front a requisição (HACK DE CORS) - IMPORTANTE !!!
-        //header('Access-Control-Allow-Origin: *');
+       	//header('Access-Control-Allow-Origin: *');
         
         // recupera os dados da requisição
         $info_latitudine = $request->user_coordinates_latitudine;
