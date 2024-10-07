@@ -23,8 +23,9 @@ const eventoCameraNegada = new CustomEvent('permissaoStatus', {
     detail: 'permissao-minima'
 });
 
-const eventoStartGame = new Event('msgStartGame');
-// const eventoFindStar = new Event('msgFindStar');
+const eventoStarMovimento = new Event('msgStartMovimento');
+const eventoSaiuMovimento = new Event('msgSaiuMovimento');
+const eventoFindStar = new Event('msgFindStar');
 
 
 // Componentes A-frame customizados:
@@ -34,7 +35,7 @@ AFRAME.registerComponent('init-permissions', {
     },
 
     init: function() {
-        console.log('Init aframeComponents.js')
+        console.log('Init init-permissions');
         // Editar modal de solicitação de permissões:
         // device-orientation-permission-ui="denyButtonText: Rejeitar; allowButtonText: Aceitar; deviceMotionMessage: Texto aqui"
         this.el.setAttribute('device-orientation-permission-ui', "allowButtonText: Entendi; deviceMotionMessage: Para seguir com a experiência é necessário permitir o acesso ao sensor de movimento, localização e câmera do dispositivo.");
@@ -171,12 +172,13 @@ AFRAME.registerComponent('set-stars', {
     },
 
     init: function() {
+        console.log('Init set-stars');
         this.miraMoto = document.getElementById('mira-moto');
         this.setaMoto = document.getElementById('seta-moto');
         this.camera = document.getElementById('camera-target');
         var coordenadas = [
             {
-                estrela1: { x: 31.34, y: 25.02, z: -11.58 },
+                estrela1: { x: -8.25, y: 23.83, z: -21.93 },
                 estrela2: { x: 24.070, y: 34.85, z: 11.36 },
                 estrela3: { x: 10.48, y: 40.51, z: -8.327 },
                 estrela4: { x: -12.27, y: 42.94, z: -15.55 },
@@ -231,7 +233,11 @@ AFRAME.registerComponent('set-stars', {
         console.log(e.target.id);
         console.log(this.estrelas[this.targetStar].id);
 
+        this.miraMoto.classList.add("animate-brilho");
+        setTimeout(()=> this.miraMoto.classList.remove("animate-brilho"), 800);
+
         console.log('ABRE IFRAME');
+        document.dispatchEvent(eventoFindStar);
 
         // if(e.target.id == this.estrelas[this.targetStar].id && this.targetStar < 4) {
         //     this.miraMoto.classList.add("animate-brilho");
@@ -251,12 +257,13 @@ AFRAME.registerComponent('detect-start-game', {
     schema: { type: 'boolean' },
 
     init: function() {
-        // console.log(this.data)
+        console.log('Init detect-start-game');
         this.el.addEventListener("mouseenter", ()=> this.initGame());  
+        this.el.addEventListener("mouseleave", ()=> this.saiuGame());  
         
         document.addEventListener("permissaoStatus", (e)=> {
             if(e.detail == 'permissao-minima' || e.detail == 'permissao-total') {
-                setTimeout(()=> this.el.classList.add('collidable'), 3800);
+                setTimeout(()=> this.el.classList.add('collidable'), 3500);
             }
             //// else {
             //     setTimeout(()=> alert('Permissão de movimento e/ou localização do celular foi negada. Para seguir com a experiência é necessário ir nas configurações do navegador e ative o acesso.'), 8000);
@@ -267,10 +274,16 @@ AFRAME.registerComponent('detect-start-game', {
     initGame: function() {
         if(this.data) {
             console.log('START GAME COM MOVIMENTO');
-            document.dispatchEvent(eventoStartGame);
+            document.dispatchEvent(eventoStarMovimento);
 
-            ////
-            this.el.setAttribute('detect-start-game', 'false');
+            ////this.el.setAttribute('detect-start-game', 'false');
+        }
+    },
+
+    saiuGame: function() {
+        if(this.data) {
+            console.log('SAIUUUUUU');
+            document.dispatchEvent(eventoSaiuMovimento);
         }
     },
 });

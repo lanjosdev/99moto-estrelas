@@ -21,7 +21,7 @@ import './style.css';
 
 
 export default function Home() {
-    const [jogoLiberado, setJogoLiberado] = useState(true);
+    const [jogoLiberado, setJogoLiberado] = useState(false);
 
     const navigate = useNavigate();
 
@@ -48,6 +48,10 @@ export default function Home() {
                     // }
                     console.log('BLOQUEIA');
                     setJogoLiberado(false);
+                }
+                else {
+                    console.log('HORARIO LIBERADO');
+                    setJogoLiberado(true);
                 }
             }
             else {
@@ -87,8 +91,7 @@ export default function Home() {
                         <span>espalhamos cupons <br /> nas estrelas</span>
                     </h2>
 
-                    <button className='btn-primary' onClick={()=> navigate('/game')}>Entrar</button>
-                    {/* <a className={jogoLiberado ? 'btn-primary' : ''} href="/game">Entrar</a> */}
+                    <button className={`btn-primary ${!jogoLiberado ? 'desativado' : ''}`} onClick={()=> navigate('/game')}>Entrar</button>
                 </div>
 
                 <div className='bottom'>

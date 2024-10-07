@@ -85,6 +85,10 @@
                 display: inline-block;
             }
         }
+
+        .btn-primary.desativado {
+            visibility: hidden;
+        }
     }
 
     .bottom {

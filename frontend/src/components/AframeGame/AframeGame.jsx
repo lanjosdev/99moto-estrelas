@@ -1,5 +1,5 @@
 // Hooks / Funcionalidades / Libs:
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import 'aframe';
 // import 'aframe-look-at-component';
 
@@ -23,12 +23,20 @@ import './aframeGame.css';
 
 
 export function AframeGame({ startGame }) {
+    const [showIframe, setShowIframe] = useState(false);
+
     // const iframeRef = useRef(null);
     const IFRAME_URL = config.dominio_iframe;
 
 
     useEffect(()=> {
-        console.log('Effect AframeGame.jsx');
+        function initListenerEventsComponent() {
+            console.log('Effect AframeGame.jsx');
+
+            document.addEventListener('msgFindStar', ()=> setShowIframe(true));
+            document.addEventListener('msgSaiuMovimento', ()=> setShowIframe(false));
+        }
+        initListenerEventsComponent();
 
         // if(!AFRAME.components['detect-start-game']) 
         // {
@@ -86,28 +94,17 @@ export function AframeGame({ startGame }) {
                 </a-camera>
 
 
-                {!startGame ? (
+                <a-entity geometry="primitive: circle" position="0 25 0" visible="true" scale="100 100 1" rotation="90 0 0" detect-start-game></a-entity>
 
-                <a-entity geometry="primitive: circle" position="0 7 0" visible="false" scale="25 25 1" rotation="90 0 0" detect-start-game></a-entity>
-
-                ) : (
-
-                <a-entity className="constelacao" position="0 0 0" visible="true" set-stars>
+                {startGame &&
+                <a-entity className="constelacao" position="0 0 0" visible={showIframe ? 'false' : 'true'} set-stars>
                     <a-image id="star1" class="collidable" src="#starTexture" width="5.5" height="5.5" opacity="0.2"></a-image>
                 </a-entity>
-
-                )}
+                }
                 {/* Entidades da cena */}
-
-
-                {/* <a-sky
-                src="#bgTexture"
-                >
-                </a-sky> */}
-                
             </a-scene>
 
-            <div className={`text-mira ${!startGame ? 'hidden' : ''}`}>
+            <div className={`text-mira ${!startGame ? 'hidden' : ''} ${showIframe ? 'hidden' : ''}`}>
                 {startGame && <p className='invisible'>Siga a seta</p>}
 
                 <div className='mira-container'>
@@ -120,11 +117,12 @@ export function AframeGame({ startGame }) {
 
 
             {/* iframe mini-game drag and drop */}
-            {/* <iframe
+            <iframe
                 src={IFRAME_URL}
                 loading="eager"
+                className={showIframe ? 'show' : ''}
             >
-            </iframe> */}
+            </iframe>
             {/* iframe mini-game drag and drop */}
 
 
