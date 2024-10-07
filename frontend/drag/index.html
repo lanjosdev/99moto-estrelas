@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonte do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <title>99 Drag</title>
+
+    <link rel="stylesheet" href="../src/styles/global.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- scripts aframe -->
+    <script src="https://jesstelford.github.io/aframe-click-drag-component/build.js"></script>
+    <script src="https://unpkg.com/aframe-line-component/dist/aframe-line-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script> 
+
+    <script src="./app.js"></script>
+  </head>
+
+  <body>
+
+    <a-scene teste>
+      <a-assets>
+        <!-- <img id="imgRef" src="./assets/bg-ref.png"> -->
+        <img id="motoDragRef" src="./assets/moto-drag.png">
+        <img id="setaDragRef" src="./assets/seta-guia.png">
+        <img id="maoDragRef" src="./assets/mao-drag.png">
+        <img id="estrelaRef" src="./assets/estrela.png">
+      </a-assets>
+
+      <!-- <a-image src="#imgRef" position="0 1.6 -8.1" width="10.5" height="20"></a-image> -->
+
+      
+      <a-entity class="constelacao">
+        <a-image id="star1" class="stars" src="#estrelaRef" position="-3.60 6.81 -8.1" width="0.75" height="0.75" opacity="0.6">
+          <!-- outra image com brilho -->
+        </a-image>
+
+        <a-entity class="line1" line="start: -1.32 -1.04 -8.1; end: -3.60 6.81 -8.1; color: #fff; opacity: 0.2"></a-entity>
+        <a-entity class="line2" line="start: -1.32 -1.04 -8.1; end: -3.60 6.81 -8.1; color: #fff; opacity: 0.4" visible="false"></a-entity>
+        <a-entity class="line3" line="start: -1.32 -1.04 -8.1; end: -3.60 6.81 -8.1; color: #fff; opacity: 1" visible="false"></a-entity>
+
+        <a-image id="star2" class="stars" src="#estrelaRef" position="1.33 6.06 -8.1" width="0.75" height="0.75" opacity="0.6"></a-image>
+
+        <a-entity class="line1" line="start: -3.60 6.81 -8.1; end: 1.33 6.06 -8.1; color: #fff; opacity: 0.2"></a-entity>
+        <a-entity class="line2" line="start: -3.60 6.81 -8.1; end: 1.33 6.06 -8.1; color: #fff; opacity: 0.4" visible="false"></a-entity>
+        <a-entity class="line3" line="start: -3.60 6.81 -8.1; end: 1.33 6.06 -8.1; color: #fff; opacity: 1" visible="false"></a-entity>
+
+        <a-image id="star3" class="stars" src="#estrelaRef" position="0.24 3.46 -8.1" width="0.75" height="0.75" opacity="0.6"></a-image>
+
+        <a-entity class="line1" line="start: 1.33 6.06 -8.1; end: 0.24 3.46 -8.1; color: #fff; opacity: 0.2"></a-entity>
+        <a-entity class="line2" line="start: 1.33 6.06 -8.1; end: 0.24 3.46 -8.1; color: #fff; opacity: 0.4" visible="false"></a-entity>
+        <a-entity class="line3" line="start: 1.33 6.06 -8.1; end: 0.24 3.46 -8.1; color: #fff; opacity: 1" visible="false"></a-entity>
+
+        <a-image id="star4" class="stars" src="#estrelaRef" position="3.92 2.09 -8.1" width="0.75" height="0.75" opacity="0.6"></a-image>
+
+        <a-entity class="line1" line="start: 0.24 3.46 -8.1; end: 3.92 2.09 -8.1; color: #fff; opacity: 0.2"></a-entity>
+        <a-entity class="line2" line="start: 0.24 3.46 -8.1; end: 3.92 2.09 -8.1; color: #fff; opacity: 0.4" visible="false"></a-entity>
+        <a-entity class="line3" line="start: 0.24 3.46 -8.1; end: 3.92 2.09 -8.1; color: #fff; opacity: 1" visible="false"></a-entity>
+
+        <a-image id="star5" class="stars" src="#estrelaRef" position="-1.32 -1.04 -8.1" width="0.75" height="0.75" opacity="0.6"></a-image>
+
+        <a-entity class="line1" line="start: 3.92 2.09 -8.1; end: -1.32 -1.04 -8.1; color: #fff; opacity: 0.2"></a-entity>
+        <a-entity class="line2" line="start: 3.92 2.09 -8.1; end: -1.32 -1.04 -8.1; color: #fff; opacity: 0.4" visible="false"></a-entity>
+        <a-entity class="line3" line="start: 3.92 2.09 -8.1; end: -1.32 -1.04 -8.1; color: #fff; opacity: 1" visible="false"></a-entity>
+      </a-entity>
+      
+      
+      <a-image click-drag src="#motoDragRef" position="-1.29 -1.24 -8.1" width="2.5" height="2.5">
+      </a-image>
+      <a-image id="seta" src="#setaDragRef" width="3" height="3" visible="false"></a-image>
+      <a-image 
+      id="mao" 
+      src="#maoDragRef" 
+      position="-1.64 -2.34 -8.1" 
+      width="1.3" height="1.8" 
+      material="opacity: 1"
+      animation="property: position; to: -2.81 1.22 -8.1; dur: 2000; easing: easeInOutQuad; loop: true"
+      >
+      </a-image>
+      <!-- -2.81 1.22 -->
+
+      <a-entity position="0 0 3.8">
+        <a-camera look-controls-enabled="false" keyboard-controls="fpsMode: true">
+        </a-camera>
+      </a-entity>
+    </a-scene>
+
+    <div class="text">
+      <h2>Guie a moto <br> pelos pontos</h2>
+    </div>
+    
+  </body>
+</html>
