@@ -1,0 +1,66 @@
+.Instrucao {
+    padding: 2.3rem 3rem;
+    justify-content: flex-start;
+    gap: 5.5rem;
+
+    &.permissao-total {
+        background-color: #0000003d;
+
+        .bg-app {
+            opacity: 0.6;
+        }
+    }
+
+    .mid {
+        gap: 4rem;
+
+        > p {
+            font-size: 2.6rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        img {
+            max-width: 10rem;
+        }
+        .text-constelacao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+            width: 100%;
+
+            p {
+                font-size: 2rem;
+                max-width: 15rem;
+
+                span {
+                    color: var(--color-primary);
+                    font-weight: 600;
+                }
+            }
+            img {
+                max-width: 17rem;
+            }
+        }
+    }
+
+    .bottom {
+        /* background-color: red; */
+        position: absolute;
+        bottom: 2rem;
+
+        img {
+            max-width: 12rem;
+        }
+        p {
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            transform: translate(-100%, -50%);
+            
+            font-size: 2.4rem;
+            font-weight: 500;
+            text-align: center;
+        }
+    }
+}

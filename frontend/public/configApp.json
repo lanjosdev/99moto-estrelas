@@ -1,0 +1,8 @@
+{
+    "base_url": "https://10.10.0.221:5173",
+    "api_url": "https://99motonasestrelas.rbiz.cc/v1/api",
+    "expire_cookies": 7,
+    "hora_inicio": 18,
+    "hora_termino": 23,
+    "dominio_iframe": "https://10.10.0.221:5173/drag/"
+}
