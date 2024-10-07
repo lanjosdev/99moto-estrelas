@@ -13,6 +13,7 @@ use App\Models\Voucher;
 use DateInterval;
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use DateTimeZone;
 
 class VoucherCoordinatesController extends Controller
 {
@@ -68,33 +69,41 @@ class VoucherCoordinatesController extends Controller
         //busca o primeiro resultado de capital com base na localização do user
         $localUF = NightInCities::where('city_latitudine', $info_latitudine_formated[0])->where('city_longitudine', $info_longitudine_formated[0])->first();
 
-        //estado
         $UF = $localUF->UF;
 
         //definindo os grupos com fuso horário diferente
         $UTC3 = ['DF', 'SP', 'RJ', 'MG', 'BA', 'RS', 'PR', 'SC', 'ES', 'GO', 'CE', 'MA', 'PI', 'PB', 'PE', 'AL', 'SE', 'RN'];
         $UTC4 = ['MT', 'MS', 'AM', 'RO', 'RR'];
 
-        //pega a data e hora atual do servidor
         $date = new DateTime();
 
-        //verifica em qual grupo se encaixa para modificar o horario de acordo com a região
-        if (in_array($UF, $UTC3)) {
-        } elseif (in_array($UF, $UTC4)) {
-            $date->sub(new DateInterval('PT1H'));
-        } else {
-           // dd('sp -2');
-            $date->sub(new DateInterval('PT2H'));
+        //pega a timezone do servidor
+        $serverTimezone = $date->getTimezone()->getName();
+
+        $saoPauloTimezone = 'America/Sao_Paulo';
+
+        // se a timezone do servidor for diferente de sao paulo atualiza para ele
+        if ($serverTimezone !== $saoPauloTimezone) {
+            $date->setTimezone(new DateTimeZone($saoPauloTimezone));
         }
 
-        //formatando a data e hora
+        //verifica em qual grupo se encaixa para modificar o horario de acordo com o estado
+        if (in_array($UF, $UTC3)) {
+        } elseif (in_array($UF, $UTC4)) {
+            //uf utc 4 -1
+            $date->sub(new DateInterval('PT1H'));
+        } else {
+            //uf -2
+            $date->sub(new DateInterval('PT2H'));
+        }
+        
         $formatedDate = $date->format('d-m-Y H:i:s');
-
+        
         //funcao para calcular a distancia entre duas coordenadas
         function getDistanceFromLatLonInKm($lat1, $lon1, $lat2, $lon2)
         {
             //raio da Terra em km
-            $R = 6371; 
+            $R = 6371;
             $dLat = deg2rad($lat2 - $lat1);
             $dLon = deg2rad($lon2 - $lon1);
 
@@ -132,7 +141,7 @@ class VoucherCoordinatesController extends Controller
                     'longitudine_1' => $location->longitudine_1,
                     //'voucher_id' => $location->voucher_id,
                     //convertendo para metros
-                    'distance_in_meters' => $distanceInKm * 1000, 
+                    'distance_in_meters' => $distanceInKm * 1000,
                 ];
             }
         }
