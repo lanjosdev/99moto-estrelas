@@ -46,8 +46,6 @@ class VoucherCoordinatesController extends Controller
     // endpoint para recuperar voucher
     public function getVouchers($id)
     {
-        // hack para liberar no front a requisição (HACK DE CORS) - IMPORTANTE !!!
-        // header('Access-Control-Allow-Origin: *');
 
         // Encontra as coordenadas do usuário
         $coordinate = UserCoordinate::find($id);
