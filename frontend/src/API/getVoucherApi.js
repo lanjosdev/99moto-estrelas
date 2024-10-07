@@ -1,11 +1,11 @@
 // Config JSON:
-import api from './configApi.json';
+import config from '../../public/configApp.json';
 // Funcionalidades / Libs:
 import axios from "axios";
 
 // Variaveis:
 // Base URL: http://10.10.0.210:8000/api
-export const API_URL = api.api_url;
+export const API_URL = config.api_url;
 
 // End-Points / Rotas da API:
 // GETVOUCHER //
@@ -22,6 +22,6 @@ export async function GET_VOUCHER(idUser) {
         }
     });
 
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
 }

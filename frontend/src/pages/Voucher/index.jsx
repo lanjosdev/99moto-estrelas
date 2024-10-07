@@ -1,7 +1,11 @@
 // Hooks / Funcionalidades / Libs:
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GET_VOUCHER } from '../../API/getVoucherApi';
 import Cookies from "js-cookie";
+
+// Config JSON:
+import config from '../../../public/configApp.json';
 
 // Components:
 import { toast } from "react-toastify";
@@ -11,20 +15,64 @@ import { toast } from "react-toastify";
 
 // Assets:
 // import circleVoucher from '../../assets/circulo-check.png';
-import logo99 from '../../assets/logoBig.png';
+import logoHeader from '../../assets/logo-header.png';
 
 // Estilo:
 import './style.css';
 
 
 export default function Voucher() {
-    const [voucher, setVoucher] = useState('');
+    const [voucher, setVoucher] = useState(null);
     
     const navigate = useNavigate();
 
+    const EXPIRE_COOKIES = config.expire_cookies;
+    console.log(EXPIRE_COOKIES);
     const sistema = Cookies.get('device99');
+    const idJogou = Cookies.get('idJogou99');
+    const hasVoucher = Cookies.get('voucher99');
     // console.log(sistema);  
     const linkApp = sistema == 'android' ? 'https://play.google.com/store/apps/details?id=com.taxis99&hl=pt_BR&pli=1' : 'https://apps.apple.com/br/app/99-v%C3%A1-de-carro-moto-ou-taxi/id553663691'
+
+
+
+    const getVoucherAPI = useCallback(async()=> {
+        try {
+            const response = await GET_VOUCHER(idJogou);
+            console.log('Resposta:', response);
+
+            if(response.success) {
+                Cookies.set('voucher99', response.message, { expires: EXPIRE_COOKIES });
+                setVoucher(response.message);
+            }
+            else {
+                console.log('NAO TEM CUPOM');
+                setVoucher('');
+            }
+        }
+        catch(erro) {
+            console.error('Erro na Requisição', erro);
+        }
+    }, [idJogou, EXPIRE_COOKIES]);
+
+    useEffect(()=> {
+        function verificacaoInicial() {
+            console.log('Effect /Voucher');
+            
+            if(hasVoucher) {
+                setVoucher(hasVoucher);
+            }
+            else if(idJogou) {
+                getVoucherAPI();
+            }
+            else {
+                console.log('vai p/ home');
+                navigate('/');
+            }
+        }
+        verificacaoInicial();
+    }, [hasVoucher, idJogou, navigate, getVoucherAPI]);
+
 
 
     function handleCopiarVoucher() {
@@ -42,52 +90,15 @@ export default function Voucher() {
     return (
         <main className='Page Voucher'>
 
-            {voucher == '' ? (
-
-                <div className='CVoucher grid'>
-                    <div className='top'>
-                        <h3>
-                            Parabéns! <br />
-                            Você capturou um voucher para andar de 99moto.
-                        </h3> 
-                    </div>
-
-                    <div className='mid'>
-                        <div className="circle-voucher">
-                            <img src='' alt="" />
-                            <p onClick={handleCopiarVoucher}>00025976</p>
-                        </div>
-                    </div>
-
-                    <div className='bottom'>
-                        <p>Copie o código e utilize <br /> na aba {`"Meus descontos"`} <br /> do  app 99.</p>
-                    </div>
+            <div className="grid Welcome">
+                <div className="bg-app">
+                    {/* <img src={BgApp} alt="" /> */}
                 </div>
 
-            ) : (
-
-                <div className="Replay CVoucher grid">
-                    <div className='top'>
-                        <h2>
-                            Atingimos mais de 1 bilhão de corridas graças à você, obrigado!
-                        </h2> 
-                    </div>
-
-                    <div className='mid'>
-                        <img src={logo99} alt="" />    
-                        <a href='/'>Jogar de novo</a>                    
-                    </div>
-
-                    <div className='bottom'>
-                        <p>
-                            Ainda não tem o app 99? <br />
-                            <a href={linkApp} target="_blank" rel="noopener noreferrer">Clique aqui</a>
-                        </p>
-                    </div>
+                <div className="top">
+                    <img src={logoHeader} alt="" />
                 </div>
-
-            )}
-            
+            </div>           
 
         </main>
     )

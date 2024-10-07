@@ -90,11 +90,11 @@ export function AframeGame({ startGame }) {
 
                 {/* Entidades da cena */}
                 <a-camera id="camera-target" look-controls="reverseMouseDrag: true">
-                    <a-cursor color="red" raycaster="far: 100; objects: .collidable;" visible="true"></a-cursor>
+                    <a-cursor color="red" raycaster="far: 100; objects: .collidable;" visible="false"></a-cursor>
                 </a-camera>
 
 
-                <a-entity geometry="primitive: circle" position="0 25 0" visible="true" scale="100 100 1" rotation="90 0 0" detect-start-game></a-entity>
+                <a-entity geometry="primitive: circle" position="0 25 0" visible="false" scale="100 100 1" rotation="90 0 0" detect-start-game></a-entity>
 
                 {startGame &&
                 <a-entity className="constelacao" position="0 0 0" visible={showIframe ? 'false' : 'true'} set-stars>
@@ -103,6 +103,10 @@ export function AframeGame({ startGame }) {
                 }
                 {/* Entidades da cena */}
             </a-scene>
+
+            <div className={`top ${!startGame ? 'hidden' : ''}`}>
+                <img src={logoHeader} alt="" />
+            </div>
 
             <div className={`text-mira ${!startGame ? 'hidden' : ''} ${showIframe ? 'hidden' : ''}`}>
                 {startGame && <p className='invisible'>Siga a seta</p>}
@@ -124,12 +128,6 @@ export function AframeGame({ startGame }) {
             >
             </iframe>
             {/* iframe mini-game drag and drop */}
-
-
-            <div className={`rodape ${!startGame ? 'hidden' : ''}`}>
-                <img src={logoHeader} alt="" />
-            </div>
-
         </div>
     )
 }

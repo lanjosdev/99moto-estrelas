@@ -44,6 +44,7 @@ export default function Game() {
 
     const BASE_URL = config.base_url;
     const EXPIRE_COOKIES = config.expire_cookies;
+    console.log(EXPIRE_COOKIES);
     const hasVoucher = Cookies.get('voucher99');
 
     

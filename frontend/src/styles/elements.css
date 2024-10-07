@@ -95,7 +95,7 @@ p {
     }
 }
 .invisible {
-    animation: invisible 3.3s ease-in-out;
+    animation: invisible 1.5s linear;
 }
 
 @keyframes showModal {

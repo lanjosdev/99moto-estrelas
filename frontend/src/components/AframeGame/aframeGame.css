@@ -15,6 +15,8 @@
     justify-content: center;
     align-items: center;
 
+    padding: 2.5rem 3rem;
+
     #videoRef {
       position: absolute;
       width: 100%;
@@ -24,16 +26,32 @@
       /* border: 5px solid red; */
     }
 
+    .top {
+      /* border: 4px solid black; */
+      /* background-color: red; */
+      width: 100%;
+
+      position: absolute;
+      top: 0;
+
+      line-height: 0;
+      padding: 2.5rem 3rem;
+
+      text-align: center;
+
+      img {
+        max-width: 37rem;
+      }
+    }
+
     .text-mira {
       position: absolute;
       transform: translateY(-1rem);
 
       p {
         opacity: 0;
-        color: var(--color-primary);
-        text-transform: uppercase;
         text-align: center;
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 600;
 
         transform: translateY(-5rem);
@@ -41,29 +59,28 @@
       }
 
       .mira-container {
-        padding: 0 80px;
-        max-width: 370px;
+        /* background-color: rgba(0, 255, 21, 0.404); */
+        position: relative;
+        line-height: 0;
+        /* padding: 0 110px; */
+        max-width: 37rem;
         
-        /* .mira-seta {
-          position: relative; */
-          /* background-color: red; */
-          /* width: 100%;
-          line-height: 0; */
+        #mira-moto {
+          /* background-color: #0208116c; */
+          padding: 0 10rem;
+        }
+        #seta-moto {
+          /* background-color: rgba(255, 0, 0, 0.329); */
+          position: absolute;
+          top: 50%;
+          left: 50%;
 
-          /* #mira-moto { */
-            /* background-color: palevioletred; */
-            /* max-width: 270px; */
-          /* } */
-          #seta-moto {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+          max-width: 24rem;
+          transform: translate(-50%, -50%) rotate(0deg);
 
-            max-width: 370px;
-            padding: 0 52px;
-          }
-        /* } */
+          /* padding: 0 110px; */
+          /* max-width: 370px; */
+        }
       }
     }
 
@@ -73,24 +90,12 @@
       border: none;
       width: 100%;
       height: 100%;
-      border: 4px solid red;
       
       display: none;
 
       &.show {
         display: block;
       }
-    }
-
-    .rodape {
-        /* background-color: red; */
-        width: 100%;
-        max-width: 370px;
-
-        position: absolute;
-        bottom: 0;
-
-        padding: 25px 110px;
     }
 }
 
