@@ -24,16 +24,15 @@ class VoucherCoordinatesController extends Controller
         $this->voucher_coordinate = $voucher_coordinate;
     }
 
-    // endpoint para inserir localização dos vouchers
     public function insertVoucherCoordinates(Request $request)
     {
-        // valida a requisição
+        //valida a requisicao
         $voucher_coordinate = $request->validate(
             $this->voucher_coordinate->rulesCoordinatesVouchers(),
             $this->voucher_coordinate->feedbackCoordinatesVouchers()
         );
 
-        // se tudo ok com a validação cria voucherCoordinate
+        //se tudo ok com a validacao cria voucherCoordinate
         $voucher_coordinate = $this->voucher_coordinate->create([
             'latitudine_1' => $request->latitudine_1,
             'longitudine_1' => $request->longitudine_1,
@@ -43,14 +42,13 @@ class VoucherCoordinatesController extends Controller
         return response()->json($voucher_coordinate);
     }
 
-    // endpoint para recuperar voucher
     public function getVouchers($id)
     {
 
-        // Encontra as coordenadas do usuário
+        // Encontra as coordenadas do usuario
         $coordinate = UserCoordinate::find($id);
 
-        // se não encontrado o id informado na requisição retorna false
+        //se não encontrado o id informado na requisicao retorna false
         if ($coordinate === null) {
             return response()->json([
                 'success' => false,
@@ -58,11 +56,11 @@ class VoucherCoordinatesController extends Controller
             ]);
         }
 
-        // pega a localização do usuario
+        // pega a localizacao do usuario
         $latUser = $coordinate->user_coordinates_latitudine;
         $lonUser = $coordinate->user_coordinates_longitudine;
 
-        //formata para pegar os valores iniciais da localização
+        //formata para pegar os valores iniciais da localizacao
         $info_latitudine_formated = explode('.', $latUser);
         $info_longitudine_formated = explode('.', $lonUser);
 
@@ -92,10 +90,11 @@ class VoucherCoordinatesController extends Controller
         //formatando a data e hora
         $formatedDate = $date->format('d-m-Y H:i:s');
 
-        // Função para calcular a distância entre duas coordenadas
+        //funcao para calcular a distancia entre duas coordenadas
         function getDistanceFromLatLonInKm($lat1, $lon1, $lat2, $lon2)
         {
-            $R = 6371; // Raio da Terra em km
+            //raio da Terra em km
+            $R = 6371; 
             $dLat = deg2rad($lat2 - $lat1);
             $dLon = deg2rad($lon2 - $lon1);
 
@@ -105,14 +104,14 @@ class VoucherCoordinatesController extends Controller
 
             $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-            // Distância em km
+            //distancia em km
             return $R * $c;
         }
 
-        // Definindo o raio máximo 100 metros
+        //definindo o raio máximo 100 metros
         $radiusInKm = 100 / 1000;
 
-        // procedures para retornar todos as localizações de vouchers do banco de dados
+        // procedures para retornar todos as localizacoes de vouchers do banco de dados
         $results = DB::select('CALL GetAllVoucherCoordinates()');
 
         $locationsWithinRadius = [];
@@ -122,28 +121,29 @@ class VoucherCoordinatesController extends Controller
             $latDb = $location->latitudine_1;
             $lonDb = $location->longitudine_1;
 
-            // Calcula a distância entre o usuário e a localização atual
+            //calcula a distancia entre o usuário e a localizacao atual
             $distanceInKm = getDistanceFromLatLonInKm($latUser, $lonUser, $latDb, $lonDb);
 
-            // Verifica se a distância está dentro do limite definido se sim retorna info da localização do voucher
+            // Verifica se a distancia está dentro do limite definido se sim retorna info da localizacao do voucher
             if ($distanceInKm <= $radiusInKm) {
                 $locationsWithinRadius[] = [
                     'id' => $location->id,
                     'latitudine_1' => $location->latitudine_1,
                     'longitudine_1' => $location->longitudine_1,
                     //'voucher_id' => $location->voucher_id,
-                    'distance_in_meters' => $distanceInKm * 1000, // Convertendo para metros
+                    //convertendo para metros
+                    'distance_in_meters' => $distanceInKm * 1000, 
                 ];
             }
         }
 
-        //recuperando o id da localização
+        //recuperando o id da localizacao
         $idVocuherCoordinates = array_column($locationsWithinRadius, "id");
 
         // se não houver voucher no raio de 100 metros do usuario
         if (empty($locationsWithinRadius)) {
 
-            // adiciona na tabela participação que voucher NÂO foi resgatado
+            // adiciona na tabela participacao que voucher NÂO foi resgatado
             Participation::where('id', $id)->update(['recovered_voucher' => 0]);
 
             // adicionando date e hora
@@ -174,7 +174,7 @@ class VoucherCoordinatesController extends Controller
         // se tiver voucher
         if (!empty($locationsWithinRadius)) {
 
-            // adiciona na tabela participação que voucher foi resgatado
+            // adiciona na tabela participacao que voucher foi resgatado
             Participation::where('id', $id)->update(['recovered_voucher' => 1]);
 
             //adicionando date e hora
@@ -186,7 +186,7 @@ class VoucherCoordinatesController extends Controller
             //deletando o voucher para não seu usada novamente
             Voucher::where('id', $idVoucher)->update(['recovered_voucher' => 1]);
 
-            //adicionando +1 na localização que foi recuperado o voucher
+            //adicionando +1 na localizacao que foi recuperado o voucher
             VoucherCoordinate::where('id', $idVocuherCoordinates)->increment('qtn_recovered_voucher');
 
             return response()->json([
