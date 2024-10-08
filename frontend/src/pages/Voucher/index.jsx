@@ -16,6 +16,8 @@ import { toast } from "react-toastify";
 // Assets:
 // import circleVoucher from '../../assets/circulo-check.png';
 import logoHeader from '../../assets/logo-header.png';
+import logo from '../../assets/logo.png';
+import notVoucher from '../../assets/not-voucher.png';
 
 // Estilo:
 import './style.css';
@@ -31,8 +33,8 @@ export default function Voucher() {
     console.log(EXPIRE_COOKIES);
     const sistema = Cookies.get('device99');
     const idJogou = Cookies.get('idJogou99');
-    // const hasVoucher = Cookies.get('voucher99');
-    const hasVoucher = '000259784';
+    const hasVoucher = Cookies.get('voucher99');
+    // const hasVoucher = '000259784';
     
     const linkApp = sistema == 'android' ? 'https://play.google.com/store/apps/details?id=com.taxis99&hl=pt_BR&pli=1' : 'https://apps.apple.com/br/app/99-v%C3%A1-de-carro-moto-ou-taxi/id553663691'
 
@@ -44,8 +46,8 @@ export default function Voucher() {
             console.log('Resposta:', response);
 
             if(response.success) {
-                Cookies.set('voucher99', response.message, { expires: EXPIRE_COOKIES });
                 setVoucher(response.message);
+                Cookies.set('voucher99', response.message, { expires: EXPIRE_COOKIES });
             }
             else {
                 console.log('NAO TEM CUPOM');
@@ -54,6 +56,8 @@ export default function Voucher() {
         }
         catch(erro) {
             console.error('Erro na Requisição', erro);
+            setVoucher('');
+            toast.error('Houve algum erro.');
         }
     }, [idJogou, EXPIRE_COOKIES]);
 
@@ -68,7 +72,7 @@ export default function Voucher() {
                 getVoucherAPI();
             }
             else {
-                console.log('vai p/ home');
+                console.log('Volta p/ home');
                 navigate('/');
             }
         }
@@ -103,7 +107,6 @@ export default function Voucher() {
                 </div>
 
                 {voucher && (
-                
                 <div className="content-voucher">
 
                     {!clicou ? (
@@ -115,7 +118,7 @@ export default function Voucher() {
                         um <span>cupom</span> de
                     </p>
 
-                    <img src="ds" alt="Logo" />
+                    <img className='logo' src={logo} alt="Logo" />
 
                     <button className='btn-primary' onClick={()=> setClicou(true)}>Continuar</button>
                     </>
@@ -144,8 +147,32 @@ export default function Voucher() {
                     )}
 
                 </div>
-
                 )}
+
+                {voucher == '' &&
+                <div className="content-not-voucher">
+
+                    <div className="img-title">
+                        <img src={notVoucher} alt="" />
+                        <p className='title'>Aqui não <br /> tem cupom.</p>
+                    </div>
+
+                    <div className="separator"></div>
+
+                    <p className="msg-mid">
+                        Continue tentando, <br />
+                        tem muitos cupons de <br />
+                        <span>99Moto</span> espalahdos <br />
+                        pelo céu.
+                    </p>
+
+                    <p className="msg-bottom">
+                        Acompanhe <br />
+                        as dicas de localização <br />
+                        no <a href="https://www.instagram.com/voude99" target="_blank" rel="noopener noreferrer">@voude99</a>
+                    </p>
+                </div>
+                }
             </div>           
 
         </main>

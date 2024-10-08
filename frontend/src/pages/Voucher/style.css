@@ -1,15 +1,12 @@
 .Voucher {
-    background-color: rgb(196, 27, 27);
 
     .grid {
         position: static;
         padding: 2.5rem 3rem;
         justify-content: flex-start;
-        gap: 11rem;
+        gap: 10rem;
 
         .top {
-            /* border: 4px solid rgb(224, 210, 210);
-            background-color: red; */
             width: 100%;
             line-height: 0;
             
@@ -47,8 +44,25 @@
                     font-size: 2.7rem;
                 }
             }
+
+            .logo {
+                max-width: 20rem;
+            }
+
+            > .btn-primary {
+                padding: 3rem 4.5rem;
+            }
+
+
+
+
             .result-voucher {
-                color: red;
+                outline: 3px solid #fff;
+                border-radius: 5px;
+                padding: 1rem;
+
+                font-size: 2.4rem;
+                font-weight: 600;
             }
 
             .btn-small {
@@ -57,7 +71,7 @@
                 gap: 1rem;
 
                 .btn-primary {
-                    padding: 3rem 4.5rem;
+                    padding: 3rem 4rem;
                 }
                 small {
                     font-size: 1.4rem;
@@ -70,6 +84,76 @@
 
                 a {
                     font-weight: 600;
+                }
+            }
+        }
+
+        .content-not-voucher {
+            transform: translateY(-5rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3.5rem;
+
+            .img-title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                img {
+                    max-width: 18rem;
+                }
+                .title {
+                    font-size: 4.8rem;
+                    font-weight: 700;
+                    letter-spacing: 2px;
+
+                    text-align: center;
+                }
+            }
+
+            .separator {
+                background-color: #CCCCCC;
+                height: 3px;
+                width: 100%;
+                max-width: 27rem;
+            }
+
+            p {
+                font-size: 2.6rem;
+                font-weight: 300;
+                text-align: center;
+            }
+            .msg-mid {
+                span {
+                    font-weight: 700;
+                }
+            }
+            .msg-bottom {
+                font-size: 2.4rem;
+                a {
+                    font-weight: 600;
+                }
+            }
+
+
+            @media (max-width: 360px) {
+                @media (max-height: 600px) {
+                    transform: translateY(-9rem);
+                    gap: 3rem;
+
+                    .img-title {       
+                        img {
+                            max-width: 15rem;
+                        }
+                        .title {
+                            font-size: 4.8rem;
+                            font-weight: 700;
+                            letter-spacing: 2px;
+        
+                            text-align: center;
+                        }
+                    }
                 }
             }
         }
