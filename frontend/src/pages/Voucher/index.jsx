@@ -23,6 +23,7 @@ import './style.css';
 
 export default function Voucher() {
     const [voucher, setVoucher] = useState(null);
+    const [clicou, setClicou] = useState(false);
     
     const navigate = useNavigate();
 
@@ -30,8 +31,9 @@ export default function Voucher() {
     console.log(EXPIRE_COOKIES);
     const sistema = Cookies.get('device99');
     const idJogou = Cookies.get('idJogou99');
-    const hasVoucher = Cookies.get('voucher99');
-    // console.log(sistema);  
+    // const hasVoucher = Cookies.get('voucher99');
+    const hasVoucher = '000259784';
+    
     const linkApp = sistema == 'android' ? 'https://play.google.com/store/apps/details?id=com.taxis99&hl=pt_BR&pli=1' : 'https://apps.apple.com/br/app/99-v%C3%A1-de-carro-moto-ou-taxi/id553663691'
 
 
@@ -78,12 +80,12 @@ export default function Voucher() {
     function handleCopiarVoucher() {
         console.log('copiando voucher...');
 
-        let texto = '00025976';
-        navigator.clipboard.writeText(texto);
+        // let texto = '00025976';
+        navigator.clipboard.writeText(voucher);
 
         toast.success('Voucher copiado!');
 
-        setTimeout(()=> setVoucher('copiou'), 500);
+        // setTimeout(()=> setVoucher('copiou'), 500);
     }
 
 
@@ -91,13 +93,59 @@ export default function Voucher() {
         <main className='Page Voucher'>
 
             <div className="grid Welcome">
+
                 <div className="bg-app">
                     {/* <img src={BgApp} alt="" /> */}
                 </div>
 
                 <div className="top">
-                    <img src={logoHeader} alt="" />
+                    <img src={logoHeader} alt="Logo da campanha" />
                 </div>
+
+                {voucher && (
+                
+                <div className="content-voucher">
+
+                    {!clicou ? (
+                    <>
+                    <p className='title'>Parabéns!</p>
+
+                    <p>
+                        Você capturou <br />
+                        um <span>cupom</span> de
+                    </p>
+
+                    <img src="ds" alt="Logo" />
+
+                    <button className='btn-primary' onClick={()=> setClicou(true)}>Continuar</button>
+                    </>
+                    ) : (
+                    <>
+                    <p className='text-bi'>
+                        Atingimos <span>1 BILHÃO</span><br />
+                        de corridas graças a você, <br />
+                        obrigado!
+                    </p>
+
+                    <p className="result-voucher" onClick={handleCopiarVoucher}>
+                        {voucher}
+                    </p>
+
+                    <div className="btn-small">
+                        <button className='btn-primary' onClick={handleCopiarVoucher} >Copiar código</button>
+                        <small>Utilize o código na aba meus <br /> descontos do app 99.</small>
+                    </div>
+
+                    <p className='bottom'>
+                        Ainda não tem <br />
+                        o app 99? <a href={linkApp} target="_blank" rel="noopener noreferrer">Clique aqui.</a>
+                    </p>
+                    </>
+                    )}
+
+                </div>
+
+                )}
             </div>           
 
         </main>
