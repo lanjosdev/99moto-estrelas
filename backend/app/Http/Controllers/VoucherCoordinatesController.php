@@ -77,17 +77,14 @@ class VoucherCoordinatesController extends Controller
 
         $date = new DateTime();
 
-        //pega a timezone do servidor
         $serverTimezone = $date->getTimezone()->getName();
 
         $saoPauloTimezone = 'America/Sao_Paulo';
-
-        // se a timezone do servidor for diferente de sao paulo atualiza para ele
+        
         if ($serverTimezone !== $saoPauloTimezone) {
             $date->setTimezone(new DateTimeZone($saoPauloTimezone));
         }
 
-        //verifica em qual grupo se encaixa para modificar o horario de acordo com o estado
         if (in_array($UF, $UTC3)) {
         } elseif (in_array($UF, $UTC4)) {
             //uf utc 4 -1
