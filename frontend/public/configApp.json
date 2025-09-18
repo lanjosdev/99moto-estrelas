@@ -1,8 +1,8 @@
 {
-    "base_url": "https://99motonasestrelas.rbiz.cc",
+    "base_url": "https://99moto-estrelas.vercel.app/",
     "api_url": "https://99motonasestrelas.rbiz.cc/v1/api",
     "expire_cookies": 7,
     "hora_inicio": 18,
     "hora_termino": 23,
-    "dominio_iframe": "https://99motonasestrelas.rbiz.cc/drag/"
+    "dominio_iframe": "https://99moto-estrelas.vercel.app/drag/"
 }

@@ -21,7 +21,7 @@ import './style.css';
 
 
 export default function Home() {
-    const [jogoLiberado, setJogoLiberado] = useState(false);
+    const [jogoLiberado, setJogoLiberado] = useState(true);
 
     const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ export default function Home() {
             console.log('Effect /Home');
 
             if(!hasVoucher) {
+                return;
                 const atual = new Date(); //cria uma nova instância do objeto Date 
                 const horaAtual = atual.getHours();
                 const minutoAtual = atual.getMinutes();
@@ -94,12 +95,12 @@ export default function Home() {
                     <button className={`btn-primary ${!jogoLiberado ? 'desativado' : ''}`} onClick={()=> navigate('/game')}>Entrar</button>
                 </div>
 
-                <div className='bottom'>
+                {/* <div className='bottom'>
                     <p>
                         Explore o céu <br />
                         entre {horaInicial}h e {horaTermino}h <br />
                         para capturar o seu.</p>
-                </div>                        
+                </div>                         */}
             </div>
                   
         </main>
