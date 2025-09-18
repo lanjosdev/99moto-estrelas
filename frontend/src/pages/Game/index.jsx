@@ -87,7 +87,10 @@ export default function Game() {
             //confetti
         }
         
-        setTimeout(()=> navigate('/voucher'), 1000);
+        setTimeout(()=> {
+            console.log('navigate /voucher');
+            navigate('/voucher')
+        }, 1000);
     }, [navigate, idUser, areaPromo, EXPIRE_COOKIES]);
 
     const setLocalizacao = useCallback((e) => {
@@ -133,9 +136,9 @@ export default function Game() {
             // Ao finalizar game:
             const handleIframeMessage = (event)=> {
                 // Filtra a origem da mensagem por questões de segurança
-                if(event.origin !== BASE_URL) {
-                    return;
-                }
+                // if(event.origin !== BASE_URL) {
+                //     return;
+                // }
     
                 if(event.data == 'ACABOU') {
                     console.log('Mensagem recebida do iframe:', event.data);

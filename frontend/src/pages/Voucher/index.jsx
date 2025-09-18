@@ -71,10 +71,10 @@ export default function Voucher() {
             else if(idJogou) {
                 getVoucherAPI();
             }
-            else {
-                console.log('Volta p/ home');
-                navigate('/');
-            }
+            // else {
+            //     console.log('Volta p/ home');
+            //     navigate('/');
+            // }
         }
         verificacaoInicial();
     }, [hasVoucher, idJogou, navigate, getVoucherAPI]);
@@ -149,7 +149,7 @@ export default function Voucher() {
                 </div>
                 )}
 
-                {voucher == '' &&
+                {(voucher == '' || voucher == null) &&
                 <div className="content-not-voucher">
 
                     <div className="img-title">
